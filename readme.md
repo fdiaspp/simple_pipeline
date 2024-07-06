@@ -3,7 +3,8 @@
 ## Inputs
 Consider a flow where several applications emit events as a result of your
 processing. A pipeline is responsible for consuming these events and
-make them available, from time to time, as files in a directory.
+make them available, from time to time, as files in a directory. The flow will be called
+`upstream_default`.
 
 Example payload of a saved event:
 ```json
