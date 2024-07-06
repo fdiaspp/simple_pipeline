@@ -56,7 +56,7 @@ of the layers that will be used by this instance:
 
 - **Trusted Data Zone**: Place where it starts to orient data to help and make easy business analysis. Quality checks must be in place to guarantee, at least, the [6 Data Quality Dimensions](https://www.google.com/search?q=6+data+quality+dimensions) (also known as Accuracy, Completeness, Consistency, Uniqueness, Timeliness, and Validity).
 
-- **[WITHOUT THE CURRENT SCOPE] Curated Data Zone**: Enriched datasets. Business logic already in place. 
+- **[OUT OF THE SCOPE] Curated Data Zone**: Enriched datasets. Business logic already in place. 
 
 ### Data Transformation Plan
 
