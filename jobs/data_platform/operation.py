@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession, DataFrame
-
+from typing import Iterable
 
 class Operation:
     
@@ -30,3 +30,23 @@ class Operation:
             None: This function does not return anything.
         """
         df.write.parquet(path)
+        
+    def generate_dataframe_based_on_columns_values(self, df: DataFrame, columns: list[str]) -> Iterable[DataFrame]:
+        """
+        Generates a sequence of DataFrames based on the unique combinations of values in the specified columns.
+
+        Args:
+            df (DataFrame): The input DataFrame.
+            columns (list[str]): A list of column names.
+
+        Yields:
+            DataFrame: A DataFrame containing the rows that match the specified column values.
+        """
+        
+        combinations = df.select(*columns).distinct().collect()
+        
+        for row in combinations:
+            filter = " and ".join([ f"{col} = '{getattr(row, col)}'" for col in columns])
+            partial_df = df.where(filter)
+            
+            yield partial_df
