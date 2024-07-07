@@ -1,4 +1,4 @@
-from data_platform import Operation
+from core import Operation
 import sys
 import json
 

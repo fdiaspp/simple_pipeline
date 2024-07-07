@@ -1,11 +1,11 @@
-from data_platform import Operation, Cleansing
+from core import Operation, Cleansing
 import json
 import sys
 
 if __name__ == '__main__':
     definitions = json.loads(sys.argv[1])
     
-    print(definitions)
+    print("PRRIIIIINTTT", definitions['hello'])
     # ops = Operation()
     # df = ops.read_json()
     # df = ops.apply_incremental_strategy_based_on_datetime(df, start_date='', end_date='', column_name='')
