@@ -13,10 +13,24 @@ class DAG:
         self.jobs_descriptor = {}
     
     def add(self, job: str, depends_on: List[str], job_args: List[str]):
+        """
+        Adds a job to the DAG with its dependencies and job arguments.
+
+        Parameters:
+            job (str): The job to be added.
+            depends_on (List[str]): List of jobs that this job depends on.
+            job_args (List[str]): The arguments for the job.
+
+        Returns:
+            None
+        """
         self.ts.add(job, *depends_on)
         self.jobs_descriptor[job] = job_args        
     
     def execute(self):
+        """
+        Executes the jobs in the DAG in a topological order.
+        """
         jobs_to_execute = tuple(self.ts.static_order())
         print("Jobs to execute: ", jobs_to_execute)
         
