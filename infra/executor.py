@@ -49,7 +49,7 @@ class Executor:
         
         Parameters:
             job (Any): The job to be executed.
-            jobs_args (List[str]): The arguments for the job execution.
+            jobs_args (List[str]): The arguments for the job.
         """
         execution_name = f'simple_pipeline_{job}_job_' + str(int(datetime.now().timestamp() * 1000))
         print(f'Executing job "{job}.py" with name {execution_name}')
