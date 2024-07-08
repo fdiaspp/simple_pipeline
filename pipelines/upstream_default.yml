@@ -25,7 +25,9 @@ jobs:
       type: datetime
       column_name: 'date'
     quality:
-      uniqueness_based_on_columns: 'event_id'
+      uniqueness_based_on_columns: 
+        columns:
+          - 'event_id'
     input:
       type: parquet
       path: 'file://///raw/upstream_default'      

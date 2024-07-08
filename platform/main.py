@@ -1,6 +1,15 @@
-from core import Operation, Cleansing
+from core import Operation, Cleansing, Quality
+from typing import Union, Type
+from pyspark.sql import DataFrame
 import json
 import sys
+
+
+def resolve_operation(df: DataFrame, cls: Union[Type[Cleansing], Type[Quality]], operations: dict ):
+    for operation in operations:
+        df = getattr(cls, operation)(df, **operations[operation])
+    return df
+
 
 if __name__ == '__main__':
     print("Params: ", sys.argv[1])
@@ -11,10 +20,9 @@ if __name__ == '__main__':
     output_writer = ops.get_writer(params['output']['type'])
     
     df = input_reader(path=params['input']['path'])
-    
-    cleansing = params.get('cleansing', {})
-    for operation in cleansing:
-        df = getattr(Cleansing, operation)(df, **cleansing[operation])
+ 
+    df = resolve_operation(df=df, cls=Cleansing, operations=params.get('cleansing', {}))
+    df = resolve_operation(df=df, cls=Quality, operations=params.get('quality', {}))     
     
     output_writer(df, 
                   path=params['output']['path'], 

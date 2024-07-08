@@ -56,7 +56,7 @@ class Executor:
         
         container = self._client.containers.run(
             image="apache/spark-py:v3.4.0",
-            command=f'/opt/spark/bin/spark-submit /app/{job}.py ' + self.__generate_json_escaped(jobs_args),
+            command=f'/opt/spark/bin/spark-submit /app/main.py ' + self.__generate_json_escaped(jobs_args),
             name=execution_name,
             labels={"poc.simple_pipeline.job": job},
             volumes={
