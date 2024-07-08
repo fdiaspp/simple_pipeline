@@ -56,7 +56,7 @@ class Operation:
     def write_parquet(self, 
                       df: DataFrame, 
                       path: str, 
-                      partition_by_columns_name: List[str] = None,
+                      partition_by: List[str] = None,
                       mode: str = 'error') -> None:
         """
         Writes a DataFrame to a Parquet file.
@@ -64,7 +64,7 @@ class Operation:
         Args:
             df (DataFrame): The DataFrame to write.
             path (str): The path to the Parquet file.
-            partition_by_columns_name (List[str], optional): The list of column names to partition the Parquet file by. Defaults to None.
+            partition_by (List[str], optional): The list of column names to partition the Parquet file by. Defaults to None.
             mode (str, optional): The write mode. Possible values are 'overwrite', 'append', 'error', 'ignore'. Defaults to 'error'.
 
         Returns:
@@ -73,7 +73,7 @@ class Operation:
         (df
          .write
          .mode(mode)
-         .partitionBy(partition_by_columns_name if partition_by_columns_name else [])
+         .partitionBy(partition_by if partition_by else [])
          .parquet(path))
 
     def generate_dataframe_based_on_columns_values(self, df: DataFrame, columns: list[str]) -> Iterator[Tuple[DataFrame, dict]]:
