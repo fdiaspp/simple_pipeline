@@ -25,6 +25,13 @@ During the first execution, you'll be asked to pull `apache/spark-py` image from
 ### How to develop?
 Make sure dependecies present on `requirements.dev.txt` are installed.
 
+### About the Folder Structure
+
+- `data`: Data directory. Data Lake structure. Currently, Refined zone is not present because of the scope of this project.
+- `pipelines`: Pipelines directory. Pipelines are groups of operations that need to be met in order to get the results expected.
+- `infra`: Infra directory. Infrastructure components. Place where you'll find how the execution works.
+- `platform`: Platform directory. Place where operation is defined.
+
 ## Inputs
 Consider a flow where several applications emit events as a result of your
 processing. A pipeline is responsible for consuming these events and
