@@ -25,7 +25,9 @@ class Operation:
         Raises:
             KeyError: If the specified type is not supported.
         """
-        mapper = {'json': self.read_json}
+        mapper = {
+            'json': self.read_json,
+            'parquet': self.read_parquet}
         return mapper[type]
     
     def get_writer(self, type: str) -> Callable: 
@@ -56,6 +58,18 @@ class Operation:
             DataFrame: The DataFrame read from the JSON file.
         """
         return self.spark.read.json(path)
+    
+    def read_parquet(self, path: str) -> DataFrame:
+        """
+        Reads a parquet file from the given path and returns a DataFrame.
+
+        Args:
+            path (str): The path to the parquet file.
+
+        Returns:
+            DataFrame: The DataFrame read from the parquet file.
+        """
+        return self.spark.read.parquet(path)
     
     def write_parquet(self, 
                       df: DataFrame, 
