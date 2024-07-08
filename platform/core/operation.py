@@ -7,7 +7,10 @@ import os
 class Operation:
 
     def __init__(self) -> None:
-        self.spark: SparkSession = SparkSession.builder.getOrCreate(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
+        self.spark: SparkSession = (SparkSession
+                                    .builder
+                                    .appName(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
+                                    .getOrCreate())
     
     def get_reader(self, type: str) -> Callable:
         """

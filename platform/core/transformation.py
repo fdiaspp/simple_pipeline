@@ -49,7 +49,11 @@ class Transformation:
         Returns:
             DataFrame: The result of executing the SQL query on the DataFrame.
         """
-        spark_session = SparkSession.builder.getOrCreate(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
+        spark_session = (SparkSession
+                        .builder
+                        .appName(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
+                        .getOrCreate())
+        
         df.createTempView(tmp_view_name)
         df = spark_session.sql(sql)
         return df
