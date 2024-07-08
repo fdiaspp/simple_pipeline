@@ -7,7 +7,7 @@ import yaml
 
 @click.command()
 @click.option('-p', '--pipeline', required=True, help='The path to the pipeline YAML file.')
-@click.option('--job', help='The name of the job to execute.')
+@click.option('--job', help='The name of the job present on the pipeline to execute.')
 def simple_pipeline(pipeline: str, job: str = None):
     
     dag = DAG()

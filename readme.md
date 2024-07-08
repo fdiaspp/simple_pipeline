@@ -1,5 +1,30 @@
 # Simple Pipeline
 
+## How to Run?
+What you need?
+- Docker
+- Install dependencies present on the `requirements.txt` file
+
+After that, execute:
+```sh
+python main.py --pipeline pipelines/upstream_default.yml
+```
+
+The usage of `main.py` is:
+```sh
+$ python main.py --help
+Usage: main.py [OPTIONS]
+
+Options:
+  -p, --pipeline TEXT  The path to the pipeline YAML file.  [required]
+  --job TEXT           The name of the job present on the pipeline to execute.
+  --help               Show this message and exit.
+```
+During the first execution, you'll be asked to pull `apache/spark-py` image from Docker Hub.
+
+### How to develop?
+Make sure dependecies present on `requirements.dev.txt` are installed.
+
 ## Inputs
 Consider a flow where several applications emit events as a result of your
 processing. A pipeline is responsible for consuming these events and
@@ -57,8 +82,3 @@ of the layers that will be used by this instance:
 - **Trusted Data Zone**: Place where it starts to orient data to help and make easy business analysis. Quality checks must be in place to guarantee, at least, the [6 Data Quality Dimensions](https://www.google.com/search?q=6+data+quality+dimensions) (also known as Accuracy, Completeness, Consistency, Uniqueness, Timeliness, and Validity).
 
 - **[OUT OF THE SCOPE] Curated Data Zone**: Enriched datasets. Business logic already in place. 
-
-### Data Transformation Plan
-
-
-### Data Quality Plan
