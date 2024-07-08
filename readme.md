@@ -1,4 +1,19 @@
 # Simple Pipeline
+Actually, not just a pipeline. What you'll see here is a vision on how I think when I'm building Data Platforms.
+
+My special a  pricinples that I love to follow are:
+- Simple to Use
+- Extensible
+- Maintainable
+- Scalable
+
+Hope you enjoy it. Feel free to add somenthing. I'd love to discuss how I could improve this.
+
+### Little Context...
+Consider a flow where several applications emit events as a result of your
+processing. A pipeline is responsible for consuming these events and
+make them available, from time to time, as files in a directory. The flow will be called
+`upstream_default`.
 
 ## How to Run?
 What you need?
@@ -33,12 +48,8 @@ Make sure dependecies present on `requirements.dev.txt` are installed.
 - `platform`: Platform directory. Place where operation is defined.
 
 ## Inputs
-Consider a flow where several applications emit events as a result of your
-processing. A pipeline is responsible for consuming these events and
-make them available, from time to time, as files in a directory. The flow will be called
-`upstream_default`.
-
 Example payload of a saved event:
+
 ```json
 {
     "event_id": "3aaafb1f-c83b-4e77-9d0a-8d88f9a9fa9a",
