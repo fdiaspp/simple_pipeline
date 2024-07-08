@@ -1,12 +1,13 @@
 from pyspark.sql import SparkSession, DataFrame
 from typing import Tuple, List, Iterator, Callable
 from datetime import datetime
+import os
 
 
 class Operation:
 
     def __init__(self) -> None:
-        self.spark: SparkSession = SparkSession.builder.getOrCreate()
+        self.spark: SparkSession = SparkSession.builder.getOrCreate(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
     
     def get_reader(self, type: str) -> Callable:
         """

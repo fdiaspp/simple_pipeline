@@ -1,4 +1,5 @@
 from pyspark.sql import DataFrame, SparkSession
+import os
 
 
 class Transformation:
@@ -34,7 +35,6 @@ class Transformation:
 
     @staticmethod
     def execute_sql(df: DataFrame, 
-                    spark_session: SparkSession, 
                     sql: str, 
                     tmp_view_name: str = 'tmp') -> DataFrame:
         """
@@ -49,7 +49,7 @@ class Transformation:
         Returns:
             DataFrame: The result of executing the SQL query on the DataFrame.
         """
-        
+        spark_session = SparkSession.builder.getOrCreate(os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'])
         df.createTempView(tmp_view_name)
         df = spark_session.sql(sql)
         return df

@@ -1,9 +1,12 @@
-from core import Operation, Cleansing, Quality
+from core import Operation, Cleansing, Quality, Transformation
 from typing import Union, Type
 from pyspark.sql import DataFrame
+import os
 import json
 import sys
 
+
+os.environ['SIMPLE_PIPELINE_PYSPAK_APP_NAME'] = 'app'
 
 def resolve_operation(df: DataFrame, cls: Union[Type[Cleansing], Type[Quality]], operations: dict ):
     for operation in operations:
@@ -21,6 +24,7 @@ if __name__ == '__main__':
     
     df = input_reader(path=params['input']['path'])
  
+    
     df = resolve_operation(df=df, cls=Cleansing, operations=params.get('cleansing', {}))
     df = resolve_operation(df=df, cls=Quality, operations=params.get('quality', {}))     
     
