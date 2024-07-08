@@ -60,7 +60,10 @@ class Executor:
             name=execution_name,
             labels={"poc.simple_pipeline.job": job},
             volumes={
-                f'{Path.cwd()}/platform': {'bind': '/app', 'mode': 'rw'}
+                f'{Path.cwd()}/platform': {'bind': '/app', 'mode': 'rw'},
+                f'{Path.cwd()}/data/0_transient': {'bind': '/transient', 'mode': 'rw'},
+                f'{Path.cwd()}/data/1_raw': {'bind': '/raw', 'mode': 'rw'},
+                f'{Path.cwd()}/data/2_trusted': {'bind': '/trusted', 'mode': 'rw'}
             },
             remove=False
         )

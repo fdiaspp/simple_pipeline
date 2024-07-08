@@ -7,14 +7,15 @@ jobs:
       column_name: 'date'
     cleansing:
       keep_most_recent_register_based_on_column:
-        column_name: 'date'
-        identity_column_name: 'id' 
+        column_name: 'timestamp'
+        identity_column_name: 'event_id' 
     input:
       type: json
       path: 'file://///transient/upstream_default'
     output: 
       type: parquet
       path: 'file://///raw/upstream_default'
+      mode: overwrite
       partition_by: ['year', 'month', 'day']
 
   refining:
@@ -24,7 +25,7 @@ jobs:
       type: datetime
       column_name: 'date'
     quality:
-      uniqueness_based_on_columns: 'id'
+      uniqueness_based_on_columns: 'event_id'
     input:
       type: parquet
       path: 'file://///raw/upstream_default'      

@@ -3,12 +3,20 @@ import json
 import sys
 
 if __name__ == '__main__':
-    definitions = json.loads(sys.argv[1])
+    print("Params: ", sys.argv[1])
+    params = json.loads(sys.argv[1])
     
-    print("PRRIIIIINTTT", definitions['hello'])
-    # ops = Operation()
-    # df = ops.read_json()
-    # df = ops.apply_incremental_strategy_based_on_datetime(df, start_date='', end_date='', column_name='')
+    ops = Operation()
+    input_reader = ops.get_reader(params['input']['type'])
+    output_writer = ops.get_writer(params['output']['type'])
     
-    # df = Cleansing.keep_most_recent_register_based_on_column(df, column_name='', identity_column_name='')
-    # ops.write_parquet(df, path='', partition_by_columns_name=[])
+    df = input_reader(path=params['input']['path'])
+    
+    cleansing = params.get('cleansing', {})
+    for operation in cleansing:
+        df = getattr(Cleansing, operation)(df, **cleansing[operation])
+    
+    output_writer(df, 
+                  path=params['output']['path'], 
+                  partition_by=params['output'].get('partition_by', []),
+                  mode=params['output'].get('mode', 'error'))
