@@ -162,3 +162,8 @@ cython_debug/
 #.idea/
 
 java_opts*
+
+data/1_raw*
+data/2_trusted*
+data/3_refined*
+*.crc

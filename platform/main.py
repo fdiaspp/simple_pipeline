@@ -23,10 +23,15 @@ if __name__ == '__main__':
     output_writer = ops.get_writer(params['output']['type'])
     
     df = input_reader(path=params['input']['path'])
- 
     
-    df = resolve_operation(df=df, cls=Cleansing, operations=params.get('cleansing', {}))
-    df = resolve_operation(df=df, cls=Quality, operations=params.get('quality', {}))     
+    operation_mapper = {
+        'cleansing': Cleansing,
+        'quality': Quality,
+        'transformation': Transformation
+    } 
+    for key in params:
+        if key in operation_mapper:
+            df = resolve_operation(df=df, cls=operation_mapper[key], operations=params[key])
     
     output_writer(df, 
                   path=params['output']['path'], 

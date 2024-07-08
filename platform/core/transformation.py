@@ -6,6 +6,7 @@ class Transformation:
     
     @staticmethod
     def derive_date_fields(df: DataFrame, 
+                           column_name: str,
                            year: bool = True, 
                            month: bool = True, 
                            day: bool = True, 
@@ -15,6 +16,7 @@ class Transformation:
 
         Args:
             df: The input DataFrame.
+            column_name: The name of the 'date' column.
             year: If True, extract the year from the 'date' column.
             month: If True, extract the month from the 'date' column.
             day: If True, extract the day from the 'date' column.
@@ -24,13 +26,13 @@ class Transformation:
             DataFrame: The DataFrame with additional date fields derived based on the 'date' column.
         """
         if year:
-            df = df.withColumn('year', df['date'].substr(1, 4))
+            df = df.withColumn('year', df[column_name].substr(1, 4))
         if month:
-            df = df.withColumn('month', df['date'].substr(6, 2))
+            df = df.withColumn('month', df[column_name].substr(6, 2))
         if day:
-            df = df.withColumn('day', df['date'].substr(9, 2))
+            df = df.withColumn('day', df[column_name].substr(9, 2))
         if hour:
-            df = df.withColumn('hour', df['date'].substr(12, 2))
+            df = df.withColumn('hour', df[column_name].substr(12, 2))
         return df
 
     @staticmethod

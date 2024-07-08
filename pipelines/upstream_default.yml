@@ -2,9 +2,9 @@
 jobs:
 
   admission:
-    incremental_strategy: 
-      type: datetime
-      column_name: 'date'
+    transformation:
+      derive_date_fields:
+        column_name: 'timestamp'
     cleansing:
       keep_most_recent_register_based_on_column:
         column_name: 'timestamp'
@@ -21,9 +21,6 @@ jobs:
   refining:
     depends_on: 
       - admission
-    incremental_strategy: 
-      type: datetime
-      column_name: 'date'
     quality:
       uniqueness_based_on_columns: 
         columns:
@@ -34,5 +31,6 @@ jobs:
     output: 
       type: parquet
       path: 'file://///trusted/{dataset_name}'
+      mode: overwrite
       partition_by: ['year', 'month', 'day']      
 
