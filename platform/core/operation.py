@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession, DataFrame
+import pyspark.sql.functions as f
 from typing import Tuple, List, Iterator, Callable
 from datetime import datetime
 import os
@@ -94,6 +95,10 @@ class Operation:
         Each shard is written to a separate Parquet file under the specified path, with the shard name derived from the values of the specified columns. 
         If `shard_based_on_columns` is not provided, the DataFrame is written to a single Parquet file under the specified path.
         """
+        if partition_by:
+            for column in partition_by:
+                if dict(df.dtypes)[column] == 'int':
+                    df = df.withColumn(column + '_2', f.format_string('%02d', df[column])).drop(column).withColumnRenamed(column + '_2', column)
 
         if shard_based_on_columns:
             for partial_df, row in self.generate_dataframe_based_on_columns_values(df, shard_based_on_columns):
