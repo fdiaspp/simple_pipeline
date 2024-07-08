@@ -30,7 +30,8 @@ jobs:
       path: 'file://///raw/upstream_default'      
     output: 
       type: parquet
-      path: 'file://///trusted/{dataset_name}'
+      path: 'file://///trusted/'
       mode: overwrite
+      shard_based_on_columns: ['domain', 'event_type']
       partition_by: ['year', 'month', 'day']      
 

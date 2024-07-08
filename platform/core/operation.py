@@ -75,7 +75,8 @@ class Operation:
                       df: DataFrame, 
                       path: str, 
                       partition_by: List[str] = None,
-                      mode: str = 'error') -> None:
+                      mode: str = 'error',
+                      shard_based_on_columns: List[str] = None) -> None:
         """
         Writes a DataFrame to a Parquet file.
 
@@ -84,15 +85,29 @@ class Operation:
             path (str): The path to the Parquet file.
             partition_by (List[str], optional): The list of column names to partition the Parquet file by. Defaults to None.
             mode (str, optional): The write mode. Possible values are 'overwrite', 'append', 'error', 'ignore'. Defaults to 'error'.
+            shard_based_on_columns (List[str], optional): The list of column names to shard the Parquet file based on. Defaults to None.
 
         Returns:
             None: This function does not return anything.
+
+        If `shard_based_on_columns` is provided, the DataFrame is sharded based on the values of the specified columns. 
+        Each shard is written to a separate Parquet file under the specified path, with the shard name derived from the values of the specified columns. 
+        If `shard_based_on_columns` is not provided, the DataFrame is written to a single Parquet file under the specified path.
         """
-        (df
-         .write
-         .mode(mode)
-         .partitionBy(partition_by if partition_by else [])
-         .parquet(path))
+
+        if shard_based_on_columns:
+            for partial_df, row in self.generate_dataframe_based_on_columns_values(df, shard_based_on_columns):
+                (partial_df
+                 .write
+                 .mode(mode)
+                 .partitionBy(partition_by if partition_by else [])
+                 .parquet(path + f"/{'.'.join(list(row.values()))}"))
+        else:
+            (df
+            .write
+            .mode(mode)
+            .partitionBy(partition_by if partition_by else [])
+            .parquet(path))
 
     def generate_dataframe_based_on_columns_values(self, df: DataFrame, columns: list[str]) -> Iterator[Tuple[DataFrame, dict]]:
         """

@@ -36,4 +36,5 @@ if __name__ == '__main__':
     output_writer(df, 
                   path=params['output']['path'], 
                   partition_by=params['output'].get('partition_by', []),
-                  mode=params['output'].get('mode', 'error'))
+                  mode=params['output'].get('mode', 'error'),
+                  shard_based_on_columns=params['output'].get('shard_based_on_columns'))
